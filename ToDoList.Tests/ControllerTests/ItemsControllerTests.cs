@@ -36,6 +36,5 @@ namespace ToDoList.Tests
         //Assert
         Assert.AreEqual(result, "Index");
     }
-
   }
 }
