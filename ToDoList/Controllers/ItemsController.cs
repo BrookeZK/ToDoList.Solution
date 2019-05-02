@@ -7,24 +7,36 @@ namespace ToDoList.Controllers
   public class ItemsController : Controller
   {
 
-    [HttpGet("/items")]
-    public ActionResult Index()
+    // [HttpGet("/items")]
+    // public ActionResult Index()
+    // {
+    //   List<Item> allItems = Item.GetAll();
+    //   return View(allItems);
+    // }
+
+    [HttpGet("/categories/{categoryId}/items/new")]
+    public ActionResult New(int categoryId)
     {
-      List<Item> allItems = Item.GetAll();
-      return View(allItems);
+       Category category = Category.Find(categoryId);
+       return View(category);
     }
 
-    [HttpGet("/items/new")]
-    public ActionResult New()
-    {
-      return View();
-    }
+    // [HttpPost("/items")]
+    // public ActionResult Create(string description)
+    // {
+    //   Item myItem = new Item(description);
+    //   return RedirectToAction("Index");
+    // }
 
-    [HttpPost("/items")]
-    public ActionResult Create(string description)
+    [HttpGet("/categories/{categoryId}/items/{itemId}")]
+    public ActionResult Show(int categoryId, int itemId)
     {
-      Item myItem = new Item(description);
-      return RedirectToAction("Index");
+      Item item = Item.Find(itemId);
+      Dictionary<string, object> model = new Dictionary<string, object>();
+      Category category = Category.Find(categoryId);
+      model.Add("item", item);
+      model.Add("category", category);
+      return View(model);
     }
 
     [HttpPost("/items/delete")]
@@ -34,12 +46,12 @@ namespace ToDoList.Controllers
       return View();
     }
 
-    [HttpGet("/items/{id}")]
-    public ActionResult Show(int id)
-    {
-      Item item = Item.Find(id);
-      return View(item);
-    }
+    // [HttpGet("/items/{id}")]
+    // public ActionResult Show(int id)
+    // {
+    //   Item item = Item.Find(id);
+    //   return View(item);
+    // }
 
   }
 }
